@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>datepicker test</title>
+		<script src="http://www.travelcostarica.nu/media/jui/js/jquery.min.js" type="text/javascript"></script>
+		<script src="http://code.jquery.com/ui/1.11.3/jquery-ui.js" type="text/javascript"></script>
+		<script src="http://www.travelcostarica.nu/libraries/cegcore/assets/jquery/jquery.js" type="text/javascript"></script>
+		<link href="http://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css" media="screen" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+jQuery(document).ready(function(jQuery){
+		jQuery( "#from" ).datepicker({
+			dateFormat: 'dd-mm-yy',
+			defaultDate: "+1w",
+			changeMonth: true,
+			numberOfMonths: 3,
+			onClose: function( selectedDate ) {
+				jQuery( "#to" ).datepicker( "option", "minDate", selectedDate );
+			}
+		});
+		jQuery( "#to" ).datepicker({
+			dateFormat: 'dd-mm-yy',
+			defaultDate: "+1w",
+			changeMonth: true,
+			numberOfMonths: 3,
+			onClose: function( selectedDate ) {
+				jQuery( "#from" ).datepicker( "option", "maxDate", selectedDate );
+				//create var rentalTo:
+				onSelect: displayVals();
+			}
+		});
+});
+
+function displayVals() {
+// display rental dates and calculate rental days
+	var rentalFrom = $( "#from" ).datepicker( "getDate" );
+	var rentalFromPlainText = $( "#from" ).val();
+	var rentalTo = $( "#to" ).datepicker( "getDate" );
+	var rentalDays = Math.floor((rentalTo.getTime() - rentalFrom.getTime()) / 86400000);
+  $('.rentalPeriodFrom').text(rentalFrom);
+  $('.rentalPeriodTo').text(rentalTo);
+	$('.fromTestPlain').text(rentalFromPlainText);
+	$('.daysAmount').text(rentalDays);
+	$('.rentalRate').text("Wie bring ich die baseRate hin? Irgendwie muss ich auf this.baseRate zugreifen können..");
+
+
+// calculate total price
+	var baseRate = 200;
+	var totalPrice = function() {
+	  if(rentalDays >= twomonthly.minDays) {
+	      return rentalDays * twomonthly.baseRate;
+	  }
+	  else if(rentalDays >= monthly.minDays) {
+	      return rentalDays * monthly.baseRate;
+	  }
+	  else if(rentalDays >= weekly.minDays) {
+	      return rentalDays * weekly.baseRate;
+	  }
+	  else {
+			return rentalDays * baseRate;
+		}
+	};
+	$('.totalCost').text(totalPrice);
+};
+
+
+// PRICE TABLE BEGINS
+var baseRate = 200;
+function rentalRate(minDays, baseRate) {
+  this.minDays = minDays;
+  this.baseRate = baseRate;
+};
+var twomonthly = new rentalRate(60, 95);
+var monthly = new rentalRate(30, 103);
+var weekly = new rentalRate(7, 120);
+
+
+</script>
+  </head>
+	<body>
+
+
+
+ <input name="from_date" id="from" type="text" size="8" class="validate['required']" placeholder="date" />
+ <label for="from_date" class="sub-label">from <span style="color:#ff0000; font-size:12px; vertical-align:top;">*</span></label>
+ <input name="to_date" id="to" type="text" size="8" class="validate['required']" placeholder="date" />
+ <label for="to_date" class="sub-label">to <span style="color:#ff0000; font-size:12px; vertical-align:top;">*</span></label>
+
+<div style="clear:both"></div>
+
+  <p>Rental From: <span class='rentalPeriodFrom'></span></p>
+	<p>Rental To: <span class='rentalPeriodTo'></span></p>
+	<p>(Plain Text Rental From: <span class='fromTestPlain'></span>)</p>
+  <p>Amount of Days: <span class='daysAmount'></span></p>
+	<p>Total Price: USD <span class='totalCost'></span>$</p>
+	<p>(based on a daily rate of <span class='rentalRate'></span>)
+
+</body>
