@@ -9,71 +9,66 @@
 		<link href="http://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css" media="screen" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript">
-jQuery(document).ready(function(jQuery){
-		jQuery( "#from" ).datepicker({
-			dateFormat: 'dd-mm-yy',
-			defaultDate: "+1w",
-			changeMonth: true,
-			numberOfMonths: 3,
-			onClose: function( selectedDate ) {
-				jQuery( "#to" ).datepicker( "option", "minDate", selectedDate );
-			}
-		});
-		jQuery( "#to" ).datepicker({
-			dateFormat: 'dd-mm-yy',
-			defaultDate: "+1w",
-			changeMonth: true,
-			numberOfMonths: 3,
-			onClose: function( selectedDate ) {
-				jQuery( "#from" ).datepicker( "option", "maxDate", selectedDate );
-				//create var rentalTo:
-				onSelect: displayVals();
-			}
-		});
+jQuery(document).ready(function(jQuery) {
+  jQuery('#from').datepicker({
+    dateFormat: 'dd-mm-yy',
+    defaultDate: '+1w',
+    changeMonth: true,
+    numberOfMonths: 3,
+    onClose: function(selectedDate) {
+      jQuery('#to').datepicker('option', 'minDate', selectedDate);
+    }
+  });
+  jQuery('#to').datepicker({
+    dateFormat: 'dd-mm-yy',
+    defaultDate: '+1w',
+    changeMonth: true,
+    numberOfMonths: 3,
+    onClose: function(selectedDate) {
+      jQuery('#from').datepicker('option', 'maxDate', selectedDate);
+
+      //create var rentalTo:
+      onSelect: displayVals();
+    }
+  });
 });
 
 function displayVals() {
-// display rental dates and calculate rental days
-	var rentalFrom = $( "#from" ).datepicker( "getDate" );
-	var rentalFromPlainText = $( "#from" ).val();
-	var rentalTo = $( "#to" ).datepicker( "getDate" );
-	var rentalDays = Math.floor((rentalTo.getTime() - rentalFrom.getTime()) / 86400000);
+  // display rental dates and calculate rental days
+  var rentalFrom = $('#from').datepicker('getDate');
+  var rentalFromPlainText = $('#from').val();
+  var rentalTo = $('#to').datepicker('getDate');
+  var rentalDays = Math.floor((rentalTo.getTime() - rentalFrom.getTime()) / 86400000);
+	var highSeason = true;
+	var Car = function(name, baseRate, weeklyRate) {
+		this.Name = name;
+		this.BaseRate = baseRate; // [highSeason, LowSeason]
+		this.WeeklyRate = weeklyRate; // [highSeason, LowSeason]
+	};
+	// PRICE TABLE
+	var daihatsuBego = new Car('Daihatsu Bego', [22.5, 22], [2.5, 2]);
+	var suzukiGranVitara = new Car('Suzuki Gran Vitara II', [33.5, 33], [3.5, 3]);
+	var hyundaiTucson = new Car('Hyundai Tucson', [777.5, 777], [77.5, 77]);
+	var model = suzukiGranVitara;
+	// calculate price
+	Car.prototype.TotalPrice = function() {
+		var appliedRate = (rentalDays >= 7) ? this.WeeklyRate : this.BaseRate;
+    if(highSeason){
+    return appliedRate[0] * rentalDays;
+    } else {
+		  return appliedRate[0] * rentalDays;
+    }
+	};
+
   $('.rentalPeriodFrom').text(rentalFrom);
   $('.rentalPeriodTo').text(rentalTo);
-	$('.fromTestPlain').text(rentalFromPlainText);
-	$('.daysAmount').text(rentalDays);
-	$('.rentalRate').text("Wie bring ich die baseRate hin? Irgendwie muss ich auf this.baseRate zugreifen können..");
+  $('.fromTestPlain').text(rentalFromPlainText);
+  $('.daysAmount').text(rentalDays);
+  $('.totalCost').text(model.TotalPrice());
+  $('.rentalRate').text(model.BaseRate);
+	$('.rentalModel').text(model.Name);
 
-
-// calculate total price
-	var baseRate = 200;
-	var totalPrice = function() {
-	  if(rentalDays >= twomonthly.minDays) {
-	      return rentalDays * twomonthly.baseRate;
-	  }
-	  else if(rentalDays >= monthly.minDays) {
-	      return rentalDays * monthly.baseRate;
-	  }
-	  else if(rentalDays >= weekly.minDays) {
-	      return rentalDays * weekly.baseRate;
-	  }
-	  else {
-			return rentalDays * baseRate;
-		}
-	};
-	$('.totalCost').text(totalPrice);
 };
-
-
-// PRICE TABLE BEGINS
-var baseRate = 200;
-function rentalRate(minDays, baseRate) {
-  this.minDays = minDays;
-  this.baseRate = baseRate;
-};
-var twomonthly = new rentalRate(60, 95);
-var monthly = new rentalRate(30, 103);
-var weekly = new rentalRate(7, 120);
 
 
 </script>
@@ -89,11 +84,12 @@ var weekly = new rentalRate(7, 120);
 
 <div style="clear:both"></div>
 
-  <p>Rental From: <span class='rentalPeriodFrom'></span></p>
-	<p>Rental To: <span class='rentalPeriodTo'></span></p>
-	<p>(Plain Text Rental From: <span class='fromTestPlain'></span>)</p>
-  <p>Amount of Days: <span class='daysAmount'></span></p>
-	<p>Total Price: USD <span class='totalCost'></span>$</p>
-	<p>(based on a daily rate of <span class='rentalRate'></span>)
+  <p><b>Rental From:</b> <span class="rentalPeriodFrom"></span></p>
+	<p><b>Rental To:</b> <span class="rentalPeriodTo"></span></p>
+	<p>(Plain Text Rental From: <span class="fromTestPlain"></span>)</p>
+  <p><b>Amount of Days:</b> <span class="daysAmount"></span></p>
+	<p><b>Total Price: USD</b> <span class="totalCost"></span>$</p>
+	<p>(<span class="rentalRate"></span>$ per day)</p>
+	<p><b>Model:</b> <span class="rentalModel"></p>
 
 </body>
