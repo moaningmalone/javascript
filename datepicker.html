@@ -40,6 +40,7 @@ function displayVals() {
   var rentalTo = $('#to').datepicker('getDate');
   var rentalDays = Math.floor((rentalTo.getTime() - rentalFrom.getTime()) / 86400000);
 	var highSeason = true;
+//	var modell = $('#car_type').val();
 	var Car = function(name, baseRate, weeklyRate) {
 		this.Name = name;
 		this.BaseRate = baseRate; // [highSeason, LowSeason]
@@ -49,7 +50,8 @@ function displayVals() {
 	var daihatsuBego = new Car('Daihatsu Bego', [22.5, 22], [2.5, 2]);
 	var suzukiGranVitara = new Car('Suzuki Gran Vitara II', [33.5, 33], [3.5, 3]);
 	var hyundaiTucson = new Car('Hyundai Tucson', [777.5, 777], [77.5, 77]);
-	var model = suzukiGranVitara;
+	var model = daihatsuBego;
+
 	// calculate price
 	Car.prototype.TotalPrice = function() {
 		var appliedRate = (rentalDays >= 7) ? this.WeeklyRate : this.BaseRate;
@@ -67,6 +69,7 @@ function displayVals() {
   $('.totalCost').text(model.TotalPrice());
   $('.rentalRate').text(model.BaseRate);
 	$('.rentalModel').text(model.Name);
+	alert(model.Name);
 
 };
 
@@ -83,6 +86,14 @@ function displayVals() {
  <label for="to_date" class="sub-label">to <span style="color:#ff0000; font-size:12px; vertical-align:top;">*</span></label>
 
 <div style="clear:both"></div>
+
+<label for="car_type" class="label-left topmargin10">Car Type/Model</label>
+<select id="car_type" name="car_type">
+ <option value="daihatsuBego">Daihatsu Bego</option>
+ <option value="suzukiGranVitara" selected>Suzuki Gran Vitara II</option>
+ <option value="hyundaiTucson">Hyundai Tucson</option>
+</select>
+
 
   <p><b>Rental From:</b> <span class="rentalPeriodFrom"></span></p>
 	<p><b>Rental To:</b> <span class="rentalPeriodTo"></span></p>
