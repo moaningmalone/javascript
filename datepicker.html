@@ -1,5 +1,9 @@
 <!DOCTYPE html>
+/*
+start a web server at 8000:
+python -m SimpleHTTPServer 8000
 
+*/
 <html>
 	<head>
 		<title>datepicker test</title>
@@ -9,6 +13,8 @@
 		<link href="http://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css" media="screen" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript">
+var cars = [];
+
 jQuery(document).ready(function(jQuery) {
   jQuery('#from').datepicker({
     dateFormat: 'dd-mm-yy',
@@ -19,6 +25,7 @@ jQuery(document).ready(function(jQuery) {
       jQuery('#to').datepicker('option', 'minDate', selectedDate);
     }
   });
+
   jQuery('#to').datepicker({
     dateFormat: 'dd-mm-yy',
     defaultDate: '+1w',
@@ -31,6 +38,12 @@ jQuery(document).ready(function(jQuery) {
       onSelect: displayVals();
     }
   });
+
+	$.getJSON( "cars.json", function( data ) {
+	 $.each( data, function( key, val ) {
+		cars.push(val);
+	 });
+	});
 });
 
 function displayVals() {
@@ -47,20 +60,14 @@ function displayVals() {
 		this.WeeklyRate = weeklyRate; // [highSeason, LowSeason]
 	};
 
-	// PRICE TABLE
-  var cars = [
-		new Car('Daihatsu Bego', [22.5, 22], [2.5, 2]),
-		new Car('Suzuki Gran Vitara II', [33.5, 33], [3.5, 3]),
-		new Car('Daihatsu Bego', [22.5, 22], [2.5, 2])
-		];
-
 	var model;
-  for	(index = 0; index < cars.length; index++) {
-    if (cars[index].Name == $('#car_type').val())
+
+	for	(index = 0; index < cars.length; index++) {
+		if (cars[index].Name == $('#car_type').val())
 		{
-			model = cars[index];
+			model = new Car(cars[index].Name, cars[index].BaseRate, cars[index].WeeklyRate );
 		}
-  }
+	}
 
 	// calculate price
 	Car.prototype.TotalPrice = function() {

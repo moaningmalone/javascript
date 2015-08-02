@@ -1,0 +1,13 @@
+[{
+    "Name": "Daihatsu Bego",
+    "BaseRate": [22.5, 22],
+    "WeeklyRate": [2.5, 2]
+}, {
+    "Name": "Suzuki Gran Vitara II",
+    "BaseRate": [33.5, 33],
+    "WeeklyRate": [3.5, 3]
+}, {
+    "Name": "Daihatsu Bego",
+    "BaseRate": [22.5, 22],
+    "WeeklyRate": [2.5, 2]
+}]
