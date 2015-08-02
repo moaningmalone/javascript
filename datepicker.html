@@ -50,7 +50,16 @@ function displayVals() {
 	var daihatsuBego = new Car('Daihatsu Bego', [22.5, 22], [2.5, 2]);
 	var suzukiGranVitara = new Car('Suzuki Gran Vitara II', [33.5, 33], [3.5, 3]);
 	var hyundaiTucson = new Car('Hyundai Tucson', [777.5, 777], [77.5, 77]);
-	var model = daihatsuBego;
+
+  var cars = [daihatsuBego, suzukiGranVitara, hyundaiTucson];
+
+	var model;
+  for	(index = 0; index < cars.length; index++) {
+    if (cars[index].Name == $('#car_type').val())
+		{
+			model = cars[index];
+		}
+  }
 
 	// calculate price
 	Car.prototype.TotalPrice = function() {
@@ -89,9 +98,9 @@ function displayVals() {
 
 <label for="car_type" class="label-left topmargin10">Car Type/Model</label>
 <select id="car_type" name="car_type">
- <option value="daihatsuBego">Daihatsu Bego</option>
- <option value="suzukiGranVitara" selected>Suzuki Gran Vitara II</option>
- <option value="hyundaiTucson">Hyundai Tucson</option>
+ <option value="Daihatsu Bego">Daihatsu Bego</option>
+ <option value="Suzuki Gran Vitara II" selected>Suzuki Gran Vitara II</option>
+ <option value="Hyundai Tucson">Hyundai Tucson</option>
 </select>
 
 
