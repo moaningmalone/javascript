@@ -46,12 +46,13 @@ function displayVals() {
 		this.BaseRate = baseRate; // [highSeason, LowSeason]
 		this.WeeklyRate = weeklyRate; // [highSeason, LowSeason]
 	};
-	// PRICE TABLE
-	var daihatsuBego = new Car('Daihatsu Bego', [22.5, 22], [2.5, 2]);
-	var suzukiGranVitara = new Car('Suzuki Gran Vitara II', [33.5, 33], [3.5, 3]);
-	var hyundaiTucson = new Car('Hyundai Tucson', [777.5, 777], [77.5, 77]);
 
-  var cars = [daihatsuBego, suzukiGranVitara, hyundaiTucson];
+	// PRICE TABLE
+  var cars = [
+		new Car('Daihatsu Bego', [22.5, 22], [2.5, 2]),
+		new Car('Suzuki Gran Vitara II', [33.5, 33], [3.5, 3]),
+		new Car('Daihatsu Bego', [22.5, 22], [2.5, 2])
+		];
 
 	var model;
   for	(index = 0; index < cars.length; index++) {
