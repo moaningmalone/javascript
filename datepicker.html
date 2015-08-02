@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-/*
-start a web server at 8000:
-python -m SimpleHTTPServer 8000
-
-*/
+<!--
+ start a web server at 8000:
+ python -m SimpleHTTPServer 8000
+-->
 <html>
 	<head>
 		<title>datepicker test</title>
@@ -41,9 +40,11 @@ jQuery(document).ready(function(jQuery) {
 
 	$.getJSON( "cars.json", function( data ) {
 	 $.each( data, function( key, val ) {
-		cars.push(val);
+	   cars.push(val);
 	 });
 	});
+
+	// TODO initialize options from cars and add onchange event handler
 });
 
 function displayVals() {
