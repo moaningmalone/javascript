@@ -32,9 +32,6 @@ jQuery(document).ready(function(jQuery) {
     numberOfMonths: 3,
     onClose: function(selectedDate) {
       jQuery('#from').datepicker('option', 'maxDate', selectedDate);
-
-      //create var rentalTo:
-      onSelect: displayVals();
     }
   });
 
@@ -44,7 +41,12 @@ jQuery(document).ready(function(jQuery) {
 	 });
 	});
 
-	// TODO initialize options from cars and add onchange event handler
+	// initialize options from cars and add onchange event handler
+  $( "#car_type, #from, #to" ).change(function() {
+  displayVals();
+  });
+
+
 });
 
 function displayVals() {
