@@ -42,10 +42,11 @@ jQuery(document).ready(function(jQuery) {
 	});
 
 	// initialize options from cars and add onchange event handler
-  $( "#car_type, #from, #to" ).change(function() {
-  displayVals();
-  });
-
+   $( "#car_type, #from, #to" ).change(function() {
+		 if($(this).val().length !== 0){
+     displayVals();
+     }
+   });
 
 });
 
