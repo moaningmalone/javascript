@@ -13,6 +13,14 @@
 
 <script type="text/javascript">
 var cars = [];
+var highSeasonStart = new Date("January 01, 2015 00:00:00");
+ highSeasonStart.getTimezoneOffset();
+ highSeasonStart.setMonth(0);
+ highSeasonStart.setDate(1);
+var highSeasonEnd = new Date("June 11, 2015 00:00:00");
+ highSeasonEnd.getTimezoneOffset();
+ highSeasonEnd.setMonth(5);
+ highSeasonEnd.setDate(11);
 
 jQuery(document).ready(function(jQuery) {
   jQuery('#from').datepicker({
@@ -50,14 +58,18 @@ jQuery(document).ready(function(jQuery) {
 
 });
 
+
 function displayVals() {
+
   // display rental dates and calculate rental days
   var rentalFrom = $('#from').datepicker('getDate');
   var rentalFromPlainText = $('#from').val();
   var rentalTo = $('#to').datepicker('getDate');
   var rentalDays = Math.floor((rentalTo.getTime() - rentalFrom.getTime()) / 86400000);
-	var highSeason = true;
-//	var modell = $('#car_type').val();
+
+	//set high season
+	rentalFrom >= highSeasonStart && rentalFrom <=highSeasonEnd ? highSeason = true : highSeason = false ;
+
 	var Car = function(name, baseRate, weeklyRate) {
 		this.Name = name;
 		this.BaseRate = baseRate; // [highSeason, LowSeason]
@@ -82,15 +94,20 @@ function displayVals() {
 		  return appliedRate[1] * rentalDays;
     }
 	};
+	var appliedRateOutside = model.TotalPrice() / rentalDays ;
 
   $('.rentalPeriodFrom').text(rentalFrom);
   $('.rentalPeriodTo').text(rentalTo);
   $('.fromTestPlain').text(rentalFromPlainText);
   $('.daysAmount').text(rentalDays);
   $('.totalCost').text(model.TotalPrice());
-  $('.rentalRate').text(model.BaseRate);
+  $('.rentalRate').text(appliedRateOutside);
 	$('.rentalModel').text(model.Name);
-	alert(model.Name);
+
+	$(".seasonTest").text(highSeason);
+
+	alert(highSeason);
+
 
 };
 
@@ -115,6 +132,8 @@ function displayVals() {
  <option value="Hyundai Tucson">Hyundai Tucson</option>
 </select>
 
+<p><b>Is it high season?</b> <span class="seasonTest"></span></p>
+
 
   <p><b>Rental From:</b> <span class="rentalPeriodFrom"></span></p>
 	<p><b>Rental To:</b> <span class="rentalPeriodTo"></span></p>
@@ -123,5 +142,12 @@ function displayVals() {
 	<p><b>Total Price: USD</b> <span class="totalCost"></span>$</p>
 	<p>(<span class="rentalRate"></span>$ per day)</p>
 	<p><b>Model:</b> <span class="rentalModel"></p>
+
+
+		<label for="newlist" class="label-left topmargin10">New List</label>
+		<select id="newlist" name="newlist">
+		 <option value="Daihatsu Bego">hello</option>
+		</select>
+
 
 </body>

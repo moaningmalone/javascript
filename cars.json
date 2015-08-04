@@ -1,13 +1,16 @@
 [{
     "Name": "Daihatsu Bego",
     "BaseRate": [22.5, 22],
-    "WeeklyRate": [2.5, 2]
+    "WeeklyRate": [2.5, 2],
+    "ImageURL" : "http://www.travelcostarica.nu/images/stories/webpics-IT-france/pics_cars/Daihatsu-Bego.jpg"
 }, {
     "Name": "Suzuki Gran Vitara II",
     "BaseRate": [33.5, 33],
-    "WeeklyRate": [3.5, 3]
+    "WeeklyRate": [3.5, 3],
+    "ImageURL" : "http://www.travelcostarica.nu/images/stories/webpics-IT-france/pics_cars/SUZUKI_GRAN_VITARA_II.jpg"
 }, {
     "Name": "Hyundai Tucson",
     "BaseRate": [777.5, 777],
-    "WeeklyRate": [77.5, 77]
+    "WeeklyRate": [77.5, 77],
+    "ImageURL" : ""
 }]

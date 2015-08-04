@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!--
+ start a web server at 8000:
+ python -m SimpleHTTPServer 8000
+-->
+<html>
+	<head>
+		<title>datepicker test</title>
+		<script src="http://www.travelcostarica.nu/media/jui/js/jquery.min.js" type="text/javascript"></script>
+		<script src="http://code.jquery.com/ui/1.11.3/jquery-ui.js" type="text/javascript"></script>
+		<script src="http://www.travelcostarica.nu/libraries/cegcore/assets/jquery/jquery.js" type="text/javascript"></script>
+		<link href="http://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css" media="screen" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+var cars = [];
+
+
+	$.getJSON( "cars.json", function( data ) {
+	 $.each( data, function( key, val ) {
+	   cars.push(val);
+	 });
+	});
+
+	var Car = function(name, baseRate, weeklyRate) {
+		this.Name = name;
+		this.BaseRate = baseRate; // [highSeason, LowSeason]
+		this.WeeklyRate = weeklyRate; // [highSeason, LowSeason]
+	};
+ 
+var model;
+
+	for	(index = 0; index < cars.length; index++) {
+		if (cars[index].Name == $('#car_type').val())
+		{
+			model = new Car(cars[index].Name, cars[index].BaseRate, cars[index].WeeklyRate );
+		}
+	}
+
+
+alert("hel");
+
+alert( model.Name );
+
+
+
+
+</script>
+  </head>
+	<body>
+
+
+
+
+<label for="newlist" class="label-left topmargin10">New List</label>
+<select id="newlist" name="newlist">
+ <option value="Daihatsu Bego">hello</option>
+</select>
+
+	<p><b>Model:</b> <span class="rentalModel"></p>
+
+</body>
